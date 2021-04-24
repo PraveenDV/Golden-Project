@@ -15,6 +15,7 @@ var gamestate= 'Start';
 var sound,soundDie,soundJump;
 var meteoriteImg;
 
+var leftButton, rightButton 
 
 function preload(){
   trex_running=loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -43,11 +44,13 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+leftButton=createButton("<-");
+rightButton=createButton("->");
   
 
-  trex = createSprite(550,575,1,1);
+  trex = createSprite(windowWidth-650,575,1,1);
   trex.visible=false;
-  trex.scale = 0.5;
+  //trex.scale = 0.9;
   trex.setCollider("circle",8,0,40);
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided",trex_collided); 
@@ -92,9 +95,9 @@ textSize(20);
 text("Score: "+ score, 1000,50);
 if(gamestate==='Start'){
   fill("blue");
-  strokeWeight(5);
+  strokeWeight(3);
   stroke("red");
-  textSize(15);
+  textSize(17);
   text("Use arrow keys to play", 500, 250);
   text("Avoid the meteorites!", 500, 280);
   text("Press Space to play", 500, 310)
@@ -125,13 +128,14 @@ if(gamestate==='Start'){
   
   score = score + Math.round(getFrameRate()/60);
  
-  
+  leftButton.position(windowWidth-50, windowHeight-10);
+rightButton.position()
   
 
-   if(keyIsDown(RIGHT_ARROW)){
+   if(mousePressedOver(rightButton)){
      trex.x+=10;
     
-   }else if(keyIsDown(LEFT_ARROW)){
+   }else if(mousePressedOver(leftButton)){
      trex.x-=10;
     
    }
@@ -207,7 +211,7 @@ function spawnClouds() {
 }
 
 function spawnPlatforms() {
-  if(frameCount%40===0){
+  if(frameCount%30===0){
     var platforms = createSprite(random(50, 1000),0, 1,1);
     platforms.setCollider('circle',0,150,300);
     //platforms.debug=true;
